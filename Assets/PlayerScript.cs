@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerScript : MonoBehaviour
 {
 
     public GameObject player;
+    public Transform moveDirection;
+    public Rigidbody2D RB;
+    public float moveSpeed = 5f;
     
 
     // Start is called before the first frame update
@@ -17,6 +21,14 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKey(KeyCode.S))
+        {
+            RB.AddForce(moveDirection.forward * moveSpeed);
+        }
+
+        if (Input.GetKey(KeyCode.K))
+        {
+
+        }
     }
 }
