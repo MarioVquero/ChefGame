@@ -1,40 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
+// using System.Numerics;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public class PlayerScript : MonoBehaviour
 {
-
-    public GameObject player;
-    public Transform moveDirection;
     public Rigidbody2D RB;
-    public float moveSpeed = 20f;
-    public Vector3 moveSpeed2;
-    
+    public float moveSpeed = 5f;
+    float horMovement;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.S))
-        {
-            Debug.Log("move left");
-            // RB.AddForce(moveDirection.forward * -moveSpeed);
-            RB.MovePosition(new Vector2(moveSpeed2.x * Time.deltaTime, 0));
-            
-        }
 
-        if (Input.GetKey(KeyCode.K))
-        {
-            Debug.Log("move Right");    
-            RB.AddForce(moveDirection.forward * moveSpeed);
+    }
+    void FixedUpdate()
+    {
+        RB.velocity = new Vector2(horMovement * moveSpeed, RB.velocity.y);
+    }
 
-        }
+    public void Move(InputAction.CallbackContext context)
+    {
+        horMovement = context.ReadValue<Vector2>().x;
     }
 }
