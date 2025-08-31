@@ -22,7 +22,7 @@ public class SpawnerScript : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        if (timer >= 5)
+        if (timer >= 10)
         {
             Instantiate(Ingredients[Random.Range(0, 3)], gameObject.GetComponent<Transform>().position, Quaternion.identity);
             timer = 0;

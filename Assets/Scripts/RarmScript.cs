@@ -6,15 +6,16 @@ using UnityEngine;
 public class RarmScript : MonoBehaviour
 {
 
-    public Rigidbody2D RB;
-    public float movingForce = 20f;
-    public Transform moveDirec;
+    public HingeJoint2D hJoint2D;
+    private JointMotor2D motor2D;
 
-    public Vector2 moveup;
+    private bool hitLimit;
 
     // Start is called before the first frame update
     void Start()
     {
+        hJoint2D = GetComponent<HingeJoint2D>();
+        motor2D = hJoint2D.motor;
     }
 
     // Update is called once per frame
@@ -22,9 +23,32 @@ public class RarmScript : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.I))
         {
-            RB.AddForce(moveDirec.up * movingForce);
-            // moveDirec.Translate(0, Time.deltaTime, 0, Space.World);
+            // JointMotor2D motor = hJoint2D.motor;
+            // motor.motorSpeed = -100;
+            // hJoint2D.motor = motor;
+            motor2D.motorSpeed = -100;
+            hJoint2D.motor = motor2D;
+            
 
+        }
+        else 
+        {
+            // JointMotor2D motor = hJoint2D.motor;
+            // motor.motorSpeed = 50;
+            // // hJoint2D.motor = motor;
+            motor2D.motorSpeed = 25;
+            hJoint2D.motor = motor2D;
+        }
+    }
+
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("limit"))
+        {
+            // Debug.Log("hit limit");
+            motor2D.motorSpeed = 0;
+            hJoint2D.motor = motor2D;
         }
     }
 }
