@@ -8,6 +8,7 @@ TagManager:
   - limit
   - GM
   - floor
+  - tray
   layers:
   - Default
   - TransparentFX

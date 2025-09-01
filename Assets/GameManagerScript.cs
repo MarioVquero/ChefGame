@@ -56,7 +56,7 @@ public class GameManagerScript : MonoBehaviour
 
     public void UpdateLivesDisplay(int currentLives)
     {
-        Debug.Log(currentLives);
+        // Debug.Log(currentLives);
         livesIMG.sprite = spriteLives[currentLives];
     }
 

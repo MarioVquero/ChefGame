@@ -6,15 +6,18 @@ using UnityEngine;
 public class IngredientScript : MonoBehaviour
 {
 
-    [SerializeField] public float timer;
+
+    public bool canJump;
 
     public Sprite sprite1;
     public Sprite sprite2;
-
-    public float scoreGiven;
-
     public SpriteRenderer spriteRenderer;
 
+    public Rigidbody2D RB;
+    public Transform transform;
+    public float timer;
+    public float scoreGiven;
+    public float jumpforce;
     public int decayStatus = 0;
 
     public GameManagerScript gameManagerScript;
@@ -23,9 +26,14 @@ public class IngredientScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
         gameManagerScript = GameObject.FindGameObjectWithTag("GM").GetComponent<GameManagerScript>();
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        transform = GetComponent<Transform>();
+        RB = GetComponent<Rigidbody2D>();
+
         scoreGiven = 1f;
+        jumpforce = 200f;
     }
 
     // Update is called once per frame
@@ -56,6 +64,22 @@ public class IngredientScript : MonoBehaviour
             Destroy(gameObject);
         }
 
+
+
+    }
+     /// <summary>
+    /// This function is called every fixed framerate frame, if the MonoBehaviour is enabled.
+    /// </summary>
+    void FixedUpdate()
+    {
+
+        if (Input.GetKeyDown(KeyCode.Space) && canJump == true)
+        {
+            RB.AddForce(transform.up * jumpforce);
+            Debug.Log("Jump" + jumpforce);
+            canJump = false;
+        }
+        
     }
 
     public void OnCollisionEnter2D(Collision2D collision)
@@ -71,5 +95,12 @@ public class IngredientScript : MonoBehaviour
             gameManagerScript.lives--;
             gameManagerScript.UpdateLivesDisplay(gameManagerScript.lives);
         }
+
+        if (collision.gameObject.CompareTag("tray"))
+        {
+            canJump = true;
+        }
+        else
+            canJump = false;
     }
 }
