@@ -15,11 +15,14 @@ public class IngredientScript : MonoBehaviour
 
     public int decayStatus = 0;
 
+    public GameManagerScript gameManagerScript;
+
 
     // Start is called before the first frame update
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        gameManagerScript = GameObject.FindGameObjectWithTag("GM").GetComponent<GameManagerScript>();
     }
 
     // Update is called once per frame
@@ -53,6 +56,12 @@ public class IngredientScript : MonoBehaviour
         if (collision.gameObject.CompareTag("Pot"))
         {
             Destroy(gameObject);
+            gameManagerScript.score++;
+        }
+        else if (collision.gameObject.CompareTag("floor"))
+        {
+            Destroy(gameObject);
+            gameManagerScript.lives--;
         }
     }
 }
