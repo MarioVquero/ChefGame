@@ -11,13 +11,14 @@ using UnityEngine.SceneManagement;
 public class GameManagerScript : MonoBehaviour
 {
     public int lives = 2;
-    public int score;
+    public float score;
     public float gameTimer = 60f;
 
     public TMP_Text scoreText;
     public TMP_Text TimerText;
 
     public Image livesIMG;
+    public GameObject endgroup;
 
     public Sprite[] spriteLives;
 
@@ -33,7 +34,7 @@ public class GameManagerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameTimer > 0)
+        if (gameTimer > 0 && lives > -1)
         {
             gameTimer -= Time.deltaTime;
 
@@ -47,7 +48,7 @@ public class GameManagerScript : MonoBehaviour
         else
         {
             Debug.Log("GAMEOVER");
-            SceneManager.LoadScene(2);
+            endgroup.SetActive(true);
         }
 
 
@@ -55,7 +56,13 @@ public class GameManagerScript : MonoBehaviour
 
     public void UpdateLivesDisplay(int currentLives)
     {
+        Debug.Log(currentLives);
         livesIMG.sprite = spriteLives[currentLives];
+    }
+
+    public void restartGame()
+    {
+        SceneManager.LoadScene(1);
     }
     
 

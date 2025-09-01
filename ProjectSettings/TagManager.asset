@@ -7,6 +7,7 @@ TagManager:
   - Pot
   - limit
   - GM
+  - floor
   layers:
   - Default
   - TransparentFX

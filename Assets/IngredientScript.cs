@@ -11,6 +11,8 @@ public class IngredientScript : MonoBehaviour
     public Sprite sprite1;
     public Sprite sprite2;
 
+    public float scoreGiven;
+
     public SpriteRenderer spriteRenderer;
 
     public int decayStatus = 0;
@@ -23,6 +25,7 @@ public class IngredientScript : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         gameManagerScript = GameObject.FindGameObjectWithTag("GM").GetComponent<GameManagerScript>();
+        scoreGiven = 1f;
     }
 
     // Update is called once per frame
@@ -39,10 +42,14 @@ public class IngredientScript : MonoBehaviour
         if (decayStatus == 1)
         {
             spriteRenderer.sprite = sprite1;
+            scoreGiven = 0.5f;
+
         }
         else if (decayStatus == 2)
         {
             spriteRenderer.sprite = sprite2;
+            gameManagerScript.lives--;
+            gameManagerScript.UpdateLivesDisplay(gameManagerScript.lives);
         }
         else if (decayStatus == 3)
         {
@@ -56,12 +63,13 @@ public class IngredientScript : MonoBehaviour
         if (collision.gameObject.CompareTag("Pot"))
         {
             Destroy(gameObject);
-            gameManagerScript.score++;
+            gameManagerScript.score += scoreGiven;
         }
         else if (collision.gameObject.CompareTag("floor"))
         {
             Destroy(gameObject);
             gameManagerScript.lives--;
+            gameManagerScript.UpdateLivesDisplay(gameManagerScript.lives);
         }
     }
 }
